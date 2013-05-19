@@ -1,0 +1,7 @@
+body { background:black; color:green; }
+h2 { font-family: sans-serif; }
+.wg {
+	float:left;
+	border:1px solid green;
+	width:45%;
+}
