@@ -279,19 +279,20 @@ window.Api = new RPGApi();
 
 $(document).ready(function() {
   Api.name = "rpg";
-  return Api.register({
+  Api.register({
     msg: function(m) {
       return Api.log(Api.route.ctx.name, m.text, 3);
     },
     dice: function(m) {
       return Api.log(Api.route.ctx.name + ' ' + m.eyes, m.result, 2);
     }
-  }, $.ajax({
+  });
+  return $.ajax({
     url: "etc/config.json",
     success: function(d) {
       console.log(d);
       Api.address = "ws://" + window.location.toString().replace("https://", "").replace("http://", "").replace(/\/.*$/, '').replace(/:[0-9]+$/, '') + ':' + (parseInt(d.port) + 1);
       return Api.connect();
     }
-  }));
+  });
 });
