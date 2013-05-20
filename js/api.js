@@ -239,7 +239,7 @@ RPGApi = (function() {
 
   RPGApi.prototype.connect = function() {
     var _this = this;
-    conslole.log("connecting to: " + this.address);
+    console.log("connecting to: " + this.address);
     if (typeof WebSocket !== "undefined" && WebSocket !== null) {
       this.socket = new WebSocket(this.address, this.service);
     }
@@ -290,7 +290,7 @@ $(document).ready(function() {
     url: "etc/config.json",
     success: function(d) {
       console.log(d);
-      Api.address = window.location.origin.replace("https://", "ws://").replace("http://", "ws://").replace(/:[0-9]+$/, ':') + (parseInt(d.port) + 1);
+      Api.address = window.location.toString().replace("https://", "ws://").replace("http://", "ws://").replace(/:[0-9]+$/, ':') + (parseInt(d.port) + 1);
       return Api.connect();
     }
   }));

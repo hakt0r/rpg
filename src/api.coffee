@@ -119,7 +119,7 @@ class RPGApi
     m.name = Api.name unless m.name?
     Api.socket.send JSON.stringify m
   connect: =>
-    conslole.log "connecting to: " + @address
+    console.log "connecting to: " + @address
     @socket  = new WebSocket(@address,@service)    if WebSocket?
     @socket  = new MozWebSocket(@address,@service) if MozWebSocket?
     @socket.message   = (m) -> @send JSON.stringify m
@@ -150,7 +150,7 @@ $(document).ready ->
       url : "etc/config.json"
       success : (d) ->
         console.log d
-        Api.address = window.location.origin
+        Api.address = window.location.toString()
             .replace("https://","ws://")
             .replace("http://","ws://")
             .replace(/:[0-9]+$/,':') +
