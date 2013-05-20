@@ -150,9 +150,10 @@ $(document).ready ->
       url : "etc/config.json"
       success : (d) ->
         console.log d
-        Api.address = window.location.toString()
-            .replace("https://","ws://")
-            .replace("http://","ws://")
+        Api.address = "ws://" + window.location.toString()
+            .replace("https://","")
+            .replace("http://","")
+            .replace(/\/.*$/,':') +
             .replace(/:[0-9]+$/,':') +
           (parseInt(d.port)+1)
         Api.connect()
