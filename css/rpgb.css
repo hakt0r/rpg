@@ -19,7 +19,7 @@ h2{font-family:sans-serif;font-variant:small-caps; font-weight:bold;}
 h3,h2{text-align:center;font-size:x-large;}
 ul{list-style-type:none;margin:0;padding:0;}
 
-#chars > span {float:left;border:1px dotted;margin-left:.5%; green;font-size:small;margin-bottom:1%;max-height:60%;position:relative;width:49%;}
+#chars > span {float:left;border:1px dotted green;margin-left:.5%; font-size:small;margin-bottom:1%;max-height:60%;position:relative;width:49%;}
 #chars span .charbox { text-align:right; position:absolute; top:0px;right:0px; padding-top:10px; }
 #chars span .charbox input {position:absolute; top:0px; right:0px; margin-bottom:15px;}
 #chars span img{width:46%;}
@@ -35,7 +35,7 @@ ul{list-style-type:none;margin:0;padding:0;}
 #head{border:3px solid green;width:80%; margin: 0 auto; background:#000;opacity:.8;text-align:center;border-radius: 20px; margin-bottom:1%;}
 #log li > span, #notice span {color:#FF0;display:inline-block;min-width:20px;}
 #logframe{bottom:2px;left:2px;overflow:auto;position:absolute;right:2px;top:10px;}
-#subtitle{font-variant:italic;margin:0;}
+#subtitle{font-variant:'italic';margin:0;}
 .wg{
   border-radius: 20px;
   background:#000; opacity:.8;border:3px solid green;float:left;margin-bottom:1%;margin-left:.5%;width:49%;}
