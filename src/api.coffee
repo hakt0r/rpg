@@ -153,7 +153,7 @@ $(document).ready ->
         Api.address = "ws://" + window.location.toString()
             .replace("https://","")
             .replace("http://","")
-            .replace(/\/.*$/,':') +
-            .replace(/:[0-9]+$/,':') +
+            .replace(/\/.*$/,'')
+            .replace(/:[0-9]+$/,'') + ':' +
           (parseInt(d.port)+1)
         Api.connect()

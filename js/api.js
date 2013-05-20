@@ -290,7 +290,7 @@ $(document).ready(function() {
     url: "etc/config.json",
     success: function(d) {
       console.log(d);
-      Api.address = window.location.toString().replace("https://", "ws://").replace("http://", "ws://").replace(/:[0-9]+$/, ':') + (parseInt(d.port) + 1);
+      Api.address = "ws://" + window.location.toString().replace("https://", "").replace("http://", "").replace(/\/.*$/, '').replace(/:[0-9]+$/, '') + ':' + (parseInt(d.port) + 1);
       return Api.connect();
     }
   }));
