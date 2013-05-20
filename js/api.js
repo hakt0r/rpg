@@ -234,11 +234,12 @@ RPGApi = (function() {
     if (m.name == null) {
       m.name = Api.name;
     }
-    return this.socket.send(JSON.stringify(m));
+    return Api.socket.send(JSON.stringify(m));
   };
 
   RPGApi.prototype.connect = function() {
     var _this = this;
+    conslole.log("connecting to: " + this.address);
     if (typeof WebSocket !== "undefined" && WebSocket !== null) {
       this.socket = new WebSocket(this.address, this.service);
     }

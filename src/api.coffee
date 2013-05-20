@@ -117,8 +117,9 @@ class RPGApi
   constructor : (@address,@service) ->
   send : (m) =>
     m.name = Api.name unless m.name?
-    @socket.send JSON.stringify m
+    Api.socket.send JSON.stringify m
   connect: =>
+    conslole.log "connecting to: " + @address
     @socket  = new WebSocket(@address,@service)    if WebSocket?
     @socket  = new MozWebSocket(@address,@service) if MozWebSocket?
     @socket.message   = (m) -> @send JSON.stringify m
@@ -154,5 +155,4 @@ $(document).ready ->
             .replace("http://","ws://")
             .replace(/:[0-9]+$/,':') +
           (parseInt(d.port)+1)
-
         Api.connect()
