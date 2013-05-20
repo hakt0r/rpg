@@ -1,18 +1,25 @@
 path = require 'path'
+fs = require 'fs'
 express = require 'express'
 WebSocketServer = require('ws').Server
 
-config=
-  port:8080
-  root:path.dirname(__dirname)
+config = http : on, port : 33451
 
-console.log "RPGBoard 0.0.1 - #{config.port} #{config.root}"
+cfgpath = path.dirname(__dirname)+'/etc/config.json'
+if fs.existsSync cfgpath
+  console.log "RPGBoard 0.0.1 - CONF - " + cfgpath
+  config = JSON.parse fs.readFileSync cfgpath
 
-app = express()
-app.use express.compress()
-app.listen config.port
-app.use "/", express.static(config.root)
+config.root = path.dirname(__dirname)
 
+if config.http
+  console.log "RPGBoard 0.0.1 - HTTP - #{config.port} #{config.root}"
+  app = express()
+  app.use express.compress()
+  app.listen config.port
+  app.use "/", express.static(config.root)
+
+console.log "RPGBoard 0.0.1 - WEBS - #{config.port+1}"
 class MicroWSS extends WebSocketServer
   @connid : 0
   @conns : {}

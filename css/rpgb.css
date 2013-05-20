@@ -7,7 +7,7 @@
              url('../fonts/glass_tty_vt220-webfont.svg#glass_tty_vt220medium') format('svg');
         font-weight: normal;
         font-style: normal; }
-h1, h2, h3, h4, h5, h6 { margin-bottom:0;margin-top: 0;font-family: 'Milonga', cursive, 'glass_tty_vt220medium'!important; text-align:center;}
+h1, h2, h3, h4, h5, h6 { margin-bottom:0;margin-top: 0;font-family: 'Milonga', cursive, 'glass_tty_vt220medium'!important;}
 
 a{color:#0f0;}
 a:hover{text-decoration:none;}
@@ -16,12 +16,12 @@ button,input{background:#000;border:1px solid green;color:green;width:40px;}
 button:active{border:1px dashed green;}
 h1{font-family:sans-serif;font-variant:small-caps;margin-bottom:0;margin-top:5px;text-align:center; font-size:xx-large;}
 h2{font-family:sans-serif;font-variant:small-caps; font-weight:bold;}
-h3,h2{0;text-align:center;font-size:x-large;}
+h3,h2{text-align:center;font-size:x-large;}
 ul{list-style-type:none;margin:0;padding:0;}
 
 #chars > span {float:left;border:1px dotted;margin-left:.5%; green;font-size:small;margin-bottom:1%;max-height:60%;position:relative;width:49%;}
-#chars span .charbox { text-align:right; position:absolute; top:0px;right:0px; }
-#chars span .charbox input { margin-bottom:15px;}
+#chars span .charbox { text-align:right; position:absolute; top:0px;right:0px; padding-top:10px; }
+#chars span .charbox input {position:absolute; top:0px; right:0px; margin-bottom:15px;}
 #chars span img{width:46%;}
 #chars span input{float:right;position:absolute;right:25px;top:0;}
 #chars .player { text-align:right; }

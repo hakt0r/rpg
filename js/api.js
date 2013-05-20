@@ -274,17 +274,23 @@ RPGApi = (function() {
 
 })();
 
-window.Api = new RPGApi("ws://192.168.43.8:8081");
+window.Api = new RPGApi();
 
 $(document).ready(function() {
   Api.name = "rpg";
-  Api.register({
+  return Api.register({
     msg: function(m) {
       return Api.log(Api.route.ctx.name, m.text, 3);
     },
     dice: function(m) {
       return Api.log(Api.route.ctx.name + ' ' + m.eyes, m.result, 2);
     }
-  });
-  return Api.connect();
+  }, $.ajax({
+    url: "etc/config.json",
+    success: function(d) {
+      console.log(d);
+      Api.address = window.location.origin.replace("https://", "ws://").replace("http://", "ws://").replace(/:[0-9]+$/, ':') + (parseInt(d.port) + 1);
+      return Api.connect();
+    }
+  }));
 });

@@ -138,12 +138,21 @@ class RPGApi
       catch e
         return console.log {}, e, m
 
-window.Api = new RPGApi("ws://192.168.43.8:8081")
+window.Api = new RPGApi()
 
 $(document).ready ->
   Api.name = "rpg"
   Api.register
     msg  : (m) -> Api.log Api.route.ctx.name, m.text, 3
     dice : (m) -> Api.log Api.route.ctx.name + ' ' + m.eyes, m.result, 2
-  Api.connect()
-  
+    $.ajax
+      url : "etc/config.json"
+      success : (d) ->
+        console.log d
+        Api.address = window.location.origin
+            .replace("https://","ws://")
+            .replace("http://","ws://")
+            .replace(/:[0-9]+$/,':') +
+          (parseInt(d.port)+1)
+
+        Api.connect()
