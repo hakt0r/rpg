@@ -1,29 +1,55 @@
-<html><head><title>rpgboard</title></head>
-<script src="jquery.js"></script>
-<script src="js/rpgboard.js"></script>
-<link rel="stylesheet" type="text/css" href="css/rpgb.css" />
-<body>
-<h1>Crazycampaign</h1>
-<div id="chars" class="wg"><h2>chars</h2>
-<ul>
-<li><input type="text" value="" /></li>
-<li><input type="text" value="" /></li>
-<li><input type="text" value="" /></li>
-<li><input type="text" value="" /></li>
-</ul>
-</div>
-<div id="dice" class="wg"><h2>dice</h2>
-<ul>
-<li><button>d4</button><span id="resd4"></span></li>
-<li><button>d6</button><span id="resd4"></span></li>
-<li><button>d8</button><span id="resd4"></span></li>
-<li><button>d10</button><span id="resd4"></span></li>
-<li><button>d12</button><span id="resd4"></span></li>
-<li><button>d20</button><span id="resd4"></span></li>
-</ul>
-</div>
-<div id="npc" class="wg"><h2>npcs</h2></div>
-<div id="map" class="wg"><h2>map</h2></div>
-<div style="clear:both;"></div>
+<html><head><title>rpgboard</title>
+ <!--<meta http-equiv="refresh" content="8" URL="http://192.168.43.8:8080" />-->
+ <link href='http://fonts.googleapis.com/css?family=Milonga' rel='stylesheet' type='text/css'>
+ <link rel="stylesheet" type="text/css" href="css/rpgb.css" />
+ <script src="js/jquery.js"></script>
+ <script src="js/jquery-ui.js"></script>
+ <script src="js/api.js"></script>
+ <script src="js/rpgboard.js"></script>
+ </head>
+ <body>
+  <div id="constrainer">
+    <div id="head">
+     <h1>ReUnion</h1>
+     <span id="subtitle">epic shit..</span>
+     <div class="infobar">s01e08 "Ingenious Inventions", Ingame Datum: 23.5.2013 </div>
+     <div id="gm">brought to you by anx</div>
+    </div>
+    <div id="chars" class="wg"><h2>chars</h2>
+     <span><span class="charbox"><input type="number" value="0" /></span><img src="img/char.png" /><br /><h3>Brixton Base</h3><div class="player">(kdog)</div></span>
+     <span>
+      <img src="img/char.png" /><br /><h3>Leela</h3><div class="player">(anx)</div>
+            <span class="charbox">
+       <input type="number" value="0" /><br />
+       PHY:3<br />
+       SOC:4<br />
+       PSY:5<br />
+       INT:2<br />
+       <h4>Feats</h4>
+       <ul>
+        <li>Spinnenl&auml;fer</li>
+        <li>I know a guy</li>
+       </ul>
+       <h4>Probleme</h4>
+       <ul>
+        <li>Narbe</li>
+        <li>Analphabet</li>
+       </ul>
+      </span>
+     </span>
+     <span><span class="charbox"><input type="number" value="0" /></span><img src="img/char.png" /><br /><h3>Krixtus</h3><div class="player">(randolf)</div></span>
+     <span><span class="charbox"><input type="number" value="0" /></span><img src="img/char.png" /><br /><h3>N.D. Nut</h3><div class="player">(fly)</div></span>
+    </div>
+    <div id="dice" class="wg"><h2>dice</h2><ul></ul></div>
+    <div id="wgl"><h2>log</h2><div "#logframe"><ul id="log"></ul></div></div>
+    <div id="npc" class="wg"><h2>npcs</h2></div>
+    <div style="clear:both;"></div>
+    <div id="notice"></div>
+    <div id="chat">
+      <div id="toolbar"></div>
+      <input type="text" id="chatinput" />
+    </div>
+    <div id="settings"></div>
+  </div>
 </body>
 </html>

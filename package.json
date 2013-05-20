@@ -1,0 +1,17 @@
+{
+  "name": "rpgboard",
+  "version": "0.0.1",
+  "description": "roleplaying tools",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "keywords": [
+    "rpg",
+    "webinterface"
+  ],
+  "author": "fly, anx - ulzq.de",
+  "license": "GPLv3",
+  "gitHead": "94b28f779127262c345bd37893426611208128e2"
+}

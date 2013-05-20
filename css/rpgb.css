@@ -1,7 +1,100 @@
-body { background:black; color:green; }
-h2 { font-family: sans-serif; }
-.wg {
-	float:left;
-	border:1px solid green;
-	width:45%;
-}
+@font-face {
+        font-family: 'glass_tty_vt220medium';
+        src: url('../fonts/glass_tty_vt220-webfont.eot');
+        src: url('../fonts/glass_tty_vt220-webfont.eot?#iefix') format('embedded-opentype'),
+             url('../fonts/glass_tty_vt220-webfont.woff') format('woff'),
+             url('../fonts/glass_tty_vt220-webfont.ttf') format('truetype'),
+             url('../fonts/glass_tty_vt220-webfont.svg#glass_tty_vt220medium') format('svg');
+        font-weight: normal;
+        font-style: normal; }
+h1, h2, h3, h4, h5, h6 { margin-bottom:0;margin-top: 0;font-family: 'Milonga', cursive, 'glass_tty_vt220medium'!important; text-align:center;}
+
+a{color:#0f0;}
+a:hover{text-decoration:none;}
+body{background:#000 url(../img/bg/sharn.jpg) no-repeat center fixed; color:green;font-family:sans-serif;}
+button,input{background:#000;border:1px solid green;color:green;width:40px;}
+button:active{border:1px dashed green;}
+h1{font-family:sans-serif;font-variant:small-caps;margin-bottom:0;margin-top:5px;text-align:center; font-size:xx-large;}
+h2{font-family:sans-serif;font-variant:small-caps; font-weight:bold;}
+h3,h2{0;text-align:center;font-size:x-large;}
+ul{list-style-type:none;margin:0;padding:0;}
+
+#chars > span {float:left;border:1px dotted;margin-left:.5%; green;font-size:small;margin-bottom:1%;max-height:60%;position:relative;width:49%;}
+#chars span .charbox { text-align:right; position:absolute; top:0px;right:0px; }
+#chars span .charbox input { margin-bottom:15px;}
+#chars span img{width:46%;}
+#chars span input{float:right;position:absolute;right:25px;top:0;}
+#chars .player { text-align:right; }
+#constrainer {position:absolute;top:2px;bottom:2px;left:2px;right:2px;overflow:hidden;}
+#dialog{bottom:2px;display:none;left:2px;position:absolute;right:2px;top:2px;}
+#dice .rolled{color:yellow;}
+#dice li > *{margin-left:2px;}
+#dice li input,#dice li button{width:40px;}
+#dice li span{margin-left:2%;}
+#gm{font-size:small;margin-bottom:1%;margin-right:1%;text-align:right;}
+#head{border:3px solid green;width:80%; margin: 0 auto; background:#000;opacity:.8;text-align:center;border-radius: 20px; margin-bottom:1%;}
+#log li > span, #notice span {color:#FF0;display:inline-block;min-width:20px;}
+#logframe{bottom:2px;left:2px;overflow:auto;position:absolute;right:2px;top:10px;}
+#subtitle{font-variant:italic;margin:0;}
+.wg{
+  border-radius: 20px;
+  background:#000; opacity:.8;border:3px solid green;float:left;margin-bottom:1%;margin-left:.5%;width:49%;}
+.wg h3{font-size:large;}
+.wg,#wgl{opacity:.8;}
+#wgl { display:none; }
+#notice {
+  display: none;
+  position: fixed; top: 5px; left: 5px; right:5px;
+  background: black; opacity: .8;
+  border: 3px solid green;
+  padding: 10px 20px;
+  color: green;
+  border-radius: 20px;
+  font: bold 14px "Helvetica Neue", Sans-Serif;
+  text-transform: uppercase; }
+
+#chat {position: absolute; bottom: 2px; left: .5%; right: .5%; height: 50px; }
+#toolbar{text-align:right;}
+#chatinput { display: block; position: absolute; top: 4px; left: 0px; bottom: 2px; right: 180px; width: auto }
+#toolbar span{display:none;}
+#wgl{
+  background:#000; opacity:.8; border:1px solid green;
+  font-size:xx-small;min-height:20%;position:absolute;right:2px;top:4%;width:18%; }
+
+#dice button { border: none; padding: 0; width: 32px; height: 32px; background-repeat: no-repeat }
+#dice .d4   { background-image: url(/img/dice/d4.svg) }
+#dice .d6   { background-image: url(/img/dice/d6.svg) }
+#dice .d8   { background-image: url(/img/dice/d8.svg) }
+#dice .d10  { background-image: url(/img/dice/d10.svg) }
+#dice .d12  { background-image: url(/img/dice/d12.svg) }
+#dice .d20  { background-image: url(/img/dice/d20.svg) }
+#dice .d100 { background-image: url(/img/dice/d100.svg) }
+
+.unselectable {
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  user-select: none;}
+
+.barrier {
+  position: fixed; top:0px;left:0px;right:0px;bottom:0px;
+  background: black; opacity: .8;}
+
+.dialog {
+  padding: 20px;
+  display: block;
+  position: fixed;
+  top: 5%;
+  left: 5%; right: 5%; }
+
+.dialog label {
+  width: 33%;
+  display: block;
+  position: absolute; }
+
+.dialog input,
+.dialog select {
+  width: 65%; display: block; margin-left: 34%; }
+
+.dialog .close { position: absolute; top: 0px; right: 0px; }
