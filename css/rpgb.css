@@ -22,9 +22,9 @@ ul{list-style-type:none;margin:0;padding:0;}
 #clock {position:absolute;top:3%;right:.5%; border:1px solid;font-size:30pt;border-radius:10px; background:#000;opacity:.75;padding:5pt;}
 #chars {height:79%; }
 #chars h3 { position:absolute; bottom:10pt; left:23%;background-color:#000;}
-#chars > span {width:49%;height:47%;float:left;border:1px dotted;margin-left:.5%; font-size:small;margin-bottom:1%;position:relative; overflow:auto;}
-#chars span .charbox { text-align:right; position:absolute; top:0px;right:0px; padding-top:10px; }
-#chars span .charbox input {position:absolute; top:0px; right:0px; margin-bottom:15px;}
+#chars > span {width:49%;height:47%;float:left;border:1px dotted;margin-left:.5%; font-size:small;margin-bottom:1%;position:relative; }
+#chars span .charbox { text-align:right; position:absolute; top:0px;right:0px; padding-top:10px; height:94%; margin-bottom:5%;overflow:auto;}
+#chars span .charbox input {position:absolute; top:0px; right:0px; }
 #chars span img{width:46%;}
 #chars span input{float:right;position:absolute;right:25px;top:0;}
 
