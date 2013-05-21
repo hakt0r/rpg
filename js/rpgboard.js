@@ -22,11 +22,13 @@ Die = (function() {
       amt = _this.amt.val();
       a = [];
       r = 0;
+      b = 1;
       for (i = _i = 0; 0 <= amt ? _i < amt : _i > amt; i = 0 <= amt ? ++_i : --_i) {
         b = Math.ceil(Math.random() * _this.eyes);
         a.push(b);
         r += b;
       }
+      $("#dicebg").html(r);
       mx = amt * _this.eyes;
       ai = a.join(", ");
       if (amt > 2) {

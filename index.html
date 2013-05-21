@@ -8,17 +8,57 @@
  <script src="js/jquery-ui.js"></script>
  <script src="js/api.js"></script>
  <script src="js/rpgboard.js"></script>
+ <script type="text/javascript">
+ 	$(document).ready(function(){
+ 		$("#csel").on('change',function() { $('*').css('color',this.value,'border-color',this.value); })
+  function update_clock() {
+  var T = new Date ( );
+  var h = T.getHours()
+  var m = T.getMinutes()
+  var s = T.getSeconds()
+  h=(h<10)?"0"+h:""+h
+  m=(m<10)?"0"+m:""+m
+  s=(s<10)?"0"+s:""+s
+  $("#clock").html(h+':'+m+':'+s)
+  }
+  setInterval(update_clock,500)
+ 	})
+ </script>
  </head>
  <body>
   <div id="constrainer">
     <div id="head">
-     <h1>ReUnion</h1>
-     <span id="subtitle">epic shit..</span>
-     <div class="infobar">s01e08 "Ingenious Inventions", Ingame Datum: 23.5.2013 </div>
+     <h1>Space Ace 5000</h1>
+     <span id="subtitle"><em>...to boldly go without a plan.</em></span>
+     <div class="infobar">s01e05 "Ingenious Inventions", Ingame Datum: 23.5.2013 <input type="color" id="csel" value="#00FF00" /></div>
      <div id="gm">brought to you by anx</div>
     </div>
+    <div id="clock"></div>
     <div id="chars" class="wg"><h2>chars</h2>
-     <span><span class="charbox"><input type="number" value="0" /></span><img src="img/chars/zottle.png" /><br /><h3>Zotak "Zottle" Kryy'Apak</h3><div class="player">(randolf)</div></span>
+     <span><span class="charbox"><input type="number" value="0" />
+            <strong>PHY:3<br />
+       SOC:4<br />
+       PSY:5<br />
+       INT:2<br /></strong>
+       <h4>Feats</h4>
+       <ul>
+        <li>Ogerst&auml;rke 8</li>
+        <li>Telekinese+ 15</li>
+        <li>Regeneration 6</li>
+        <li>Nachtsicht 5</li>
+        <li>Belesen 5</li>
+       </ul>
+       <h4>Probleme</h4>
+       <ul>
+        <li>Dunkle Vergangenheit</li>
+        <li>berüchtigt</li>
+        <li>Ängstigt Tiere</li>
+        <li>Einsamer Wolf</li>
+        <li>soziales Stigma</li>
+        <li>Narbe im Gesicht</li>
+        <li>Schwur</li>
+       </ul>
+     </span><img src="img/char.svg" /><br /><h3>Zotak "Zottle" Kryy'Apak</h3><div class="player">(randolf)</div></span>
      <span>
       <img src="img/chars/klick.png" /><br /><h3>Klickrox</h3><div class="player">(kdog)</div>
             <span class="charbox">
@@ -29,20 +69,27 @@
        INT:2<br /></strong>
        <h4>Feats</h4>
        <ul>
-        <li>Spinnenl&auml;fer</li>
-        <li>I know a guy</li>
+        <li>Belesen 5</li>
+        <li>Gadgeteer 10</li>
+        <li>Multilingual 5</li>
+        <li>Schneller Lerner 10</li>
+        <li>Schneller Leser 5</li>
+        <li>Strahlungsresistenz 5</li>
        </ul>
        <h4>Probleme</h4>
        <ul>
-        <li>Narbe</li>
-        <li>Analphabet</li>
+        <li>Erhöhter Life-support</li>
+        <li>Humorlos</li>
+        <li>Kein Geruchssinn</li>
+        <li>Trademark</li>
        </ul>
       </span>
      </span>
-     <span><span class="charbox"><input type="number" value="0" /></span><img src="img/chars/pix.png" /><br /><h3>Pix Blank</h3><div class="player">(randolf)</div></span>
-     <span><span class="charbox"><input type="number" value="0" /></span><img src="img/chars/gentle.png" /><br /><h3>Ed "Gentle" Palmer</h3><div class="player">(fly)</div></span>
+     <span><span class="charbox"><input type="number" value="0" />
+     </span><img src="img/char.svg" /><br /><h3>Pix Blank</h3><div class="player">(anx)</div></span>
+     <span><span class="charbox"><input type="number" value="0" /></span><img src="img/char.svg" /><br /><h3>Ed "Gentle" Palmer</h3><div class="player">(fly)</div></span>
     </div>
-    <div id="dice" class="wg"><h2>dice</h2><ul></ul></div>
+    <div id="dice" class="wg"><div id="dicebg"></div><h2>dice</h2><ul></ul></div>
     <div id="wgl"><h2>log</h2><div "#logframe"><ul id="log"></ul></div></div>
     <div id="npc" class="wg"><h2>npcs</h2></div>
     <div style="clear:both;"></div>

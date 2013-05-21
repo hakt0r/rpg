@@ -16,10 +16,12 @@ class Die
       amt = @amt.val()
       a = []
       r = 0
+      b = 1
       for i in [0 ... amt ]
         b = Math.ceil Math.random() * @eyes
         a.push b
         r += b
+      $("#dicebg").html(r)
       mx = amt*@eyes
       ai = a.join(", ")
       if amt > 2 then ai += " =#{r}/#{amt*@eyes}"
