@@ -23,7 +23,7 @@ ul{list-style-type:none;margin:0;padding:0;}
 #chars {height:79%; }
 #chars h3 { position:absolute; bottom:10pt; left:23%;background-color:#000;}
 #chars > span {width:49%;height:47%;float:left;border:1px dotted;margin-left:.5%; font-size:small;margin-bottom:1%;position:relative; }
-#chars span .charbox { text-align:right; position:absolute; top:0px;right:0px; padding-top:10px; height:94%; margin-bottom:5%;overflow:auto;}
+#chars span .charbox { text-align:right; position:absolute; top:0px;right:0px; padding-top:10px; height:88%; margin-bottom:5%;overflow:auto;}
 #chars span .charbox input {position:absolute; top:0px; right:0px; }
 #chars span img{width:46%;}
 #chars span input{float:right;position:absolute;right:25px;top:0;}
@@ -34,7 +34,7 @@ ul{list-style-type:none;margin:0;padding:0;}
 #dice { position:relative; }
 #dice .rolled{color:yellow!important;}
 #dice li > *{margin-left:2px;}
-#dice li input,#dice li button{width:40px;}
+#dice li input,#dice li button{width:40px; 	/*-webkit-filter: hue-rotate(120deg);*/}
 #dice li span{margin-left:2%;}
 #dicebg { z-index:-7; position:absolute; top:0px; left:100px; font-size:180pt; opacity:.5;text-align:center; width:100%; }
 #gm{font-size:small;margin-bottom:1%;margin-right:1%;text-align:right;}

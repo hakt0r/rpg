@@ -1,4 +1,5 @@
 ## rpg - Rolepalying Board
+Roleplaying Board - Dice, Maps, Chars - dokuwiki backed
 
 ### Installation
 Put rpg directory somewhere into your dokuwiki webroot

@@ -110,6 +110,7 @@ $(document).ready(function() {
             var _this = this;
             this.name = this.frame.find(".name");
             this.pass = this.frame.find(".password");
+            this.camp = this.frame.find("select");
             this.name.focus();
             this.name.on("keydown", function(e) {
               if (e.keyCode === 13) {
@@ -122,10 +123,22 @@ $(document).ready(function() {
                 user = _this.name.val();
                 pass = _this.pass.val();
                 return Api.login(user, pass, function(result) {
+                  var id;
                   if (result) {
                     Api.log("login as", user, 2);
                     Api.name = user;
-                    return _this.destroy();
+                    Api.campaign = c = {};
+                    c.id = id = _this.camp.val();
+                    return Api.get(id + ':def', function(data) {
+                      data = data.split('\n');
+                      c.title = data.shift().match(/======([^=]+)======/)[1].trim();
+                      c.subtitle = data.shift().replace(/\ \\\\$/, '');
+                      c.gm = data.shift().replace(/gm:/, '').trim();
+                      $("h1").html(c.title);
+                      $("#subtitle").html(c.subtitle);
+                      $("#gm").html('brought to you by ' + c.gm);
+                      return _this.destroy();
+                    });
                   } else {
                     _this.name.focus();
                     _this.name.effect("highlight", {}, 250);

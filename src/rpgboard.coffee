@@ -69,6 +69,7 @@ $(document).ready ->
           init : ->
             @name = @frame.find(".name")
             @pass = @frame.find(".password")
+            @camp = @frame.find("select")
             @name.focus()
             @name.on "keydown", (e)=> if e.keyCode is 13 then @pass.focus()
             @pass.on "keydown", (e)=>
@@ -77,8 +78,18 @@ $(document).ready ->
                 Api.login user, pass, (result) =>
                   if result
                     Api.log "login as", user, 2
-                    Api.name = user 
-                    @destroy()
+                    Api.name = user
+                    Api.campaign = c =  {}
+                    c.id = id = @camp.val()
+                    Api.get id + ':def', (data) =>
+                      data = data.split '\n'
+                      c.title = data.shift().match(`/======([^=]+)======/`)[1].trim()
+                      c.subtitle = data.shift().replace /\ \\\\$/, ''
+                      c.gm = data.shift().replace(/gm:/, '').trim()
+                      $("h1").html c.title
+                      $("#subtitle").html c.subtitle
+                      $("#gm").html 'brought to you by ' + c.gm
+                      @destroy()
                   else
                     @name.focus()
                     @name.effect("highlight",{},250)
