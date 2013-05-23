@@ -1,6 +1,7 @@
 config =
   root : "rpg:kampagnen"
-  wiki : "http://wiki.ulzq.de/lib/plugins/jsonrpc/jsonrpc.php"
+  wiki : "http://wiki.ulzq.de/doku.php?id="
+  rpc  : "http://wiki.ulzq.de/lib/plugins/jsonrpc/jsonrpc.php"
   default : "Space_2013"
 
 class Die
@@ -51,49 +52,70 @@ $(document).ready ->
     name : "map"
     click : -> alert "please dont press this button again"
 
+  login = ()->
+    Api.list "", (campaigns)->
+      camps = ( "<option>#{c}</option>" for c in campaigns )
+      Api.dialog
+        src : """
+          <div class="dialog" id="#{@id}">
+            <h2>login</h2>
+            <button class="close">X</button>
+            <label>Campaign</label><select>#{camps}</select>
+            <label>User</label><input  type="text" class="name" />
+            <label>Password</label><input  type="password" class="password" />
+          </div>"""
+        init : ->
+          @name = @frame.find(".name")
+          @pass = @frame.find(".password")
+          @camp = @frame.find("select")
+          @name.focus()
+          @name.on "keydown", (e)=> if e.keyCode is 13 then @pass.focus()
+          @pass.on "keydown", (e)=>
+            if e.keyCode is 13
+              user = @name.val(); pass = @pass.val();
+              Api.login user, pass, (result) =>
+                if result
+                  Api.log "login as", user, 2
+                  Api.name = user
+                  Api.campaign = c =  {}
+                  c.id = id = @camp.val()
+                  Api.get id + ':def', (data) =>
+                    data = data.split '\n'
+                    c.title = data.shift().match(`/======([^=]+)======/`)[1].trim()
+                    c.subtitle = data.shift().replace /\ \\\\$/, ''
+                    c.gm = data.shift().replace(/gm:/, '').trim()
+                    $("h1").html c.title
+                    $("#subtitle").html c.subtitle
+                    usr = c.gm.split(':').pop().split(']]').shift()
+                    $("#gm").html 'brought to you by ' +
+                      """<a href="#{config.wiki}users:#{usr}">#{usr}</a>"""
+                    c.chars = {}
+                    charlist = Api.parse_section data, 'Chars'
+                    for char in charlist
+                      if (r = char.match `/  \* \[\[.:chars:([^\]]+)\]\]/`)
+                        wikid = c.id + ':chars:' + r[1]
+                        c.chars[r[1]] = { wikid : wikid }
+                        Api.get wikid, (chardata) ->
+                          featlist = Api.parse_section chardata, 'Feats'
+                          feats = {}
+                          for feat in featlist
+                            feat  = feat.replace /^  \* /, ''
+                            name  = feat.match('^[^ ]+').toString()
+                            value = feat.match('-?[0-9]+').toString()
+                            feats[name] = value
+                          problist = Api.parse_section chardata, 'Problems'
+                          console.log feats, probs 
+                    @destroy()
+                    Api.progress 'done'
+                else
+                  @name.focus()
+                  @name.effect("highlight",{},250)
+                  @pass.effect("highlight",{},250)
+
   new ToolButton
     name  : "login"
     image : "key"
-    click : ->
-      Api.list "", (campaigns)->
-        camps = ( "<option>#{c}</option>" for c in campaigns )
-        Api.dialog
-          src : """
-            <div class="dialog" id="#{@id}">
-              <h2>login</h2>
-              <button class="close">X</button>
-              <label>Campaign</label><select>#{camps}</select>
-              <label>User</label><input  type="text" class="name" />
-              <label>Password</label><input  type="password" class="password" />
-            </div>"""
-          init : ->
-            @name = @frame.find(".name")
-            @pass = @frame.find(".password")
-            @camp = @frame.find("select")
-            @name.focus()
-            @name.on "keydown", (e)=> if e.keyCode is 13 then @pass.focus()
-            @pass.on "keydown", (e)=>
-              if e.keyCode is 13
-                user = @name.val(); pass = @pass.val();
-                Api.login user, pass, (result) =>
-                  if result
-                    Api.log "login as", user, 2
-                    Api.name = user
-                    Api.campaign = c =  {}
-                    c.id = id = @camp.val()
-                    Api.get id + ':def', (data) =>
-                      data = data.split '\n'
-                      c.title = data.shift().match(`/======([^=]+)======/`)[1].trim()
-                      c.subtitle = data.shift().replace /\ \\\\$/, ''
-                      c.gm = data.shift().replace(/gm:/, '').trim()
-                      $("h1").html c.title
-                      $("#subtitle").html c.subtitle
-                      $("#gm").html 'brought to you by ' + c.gm
-                      @destroy()
-                  else
-                    @name.focus()
-                    @name.effect("highlight",{},250)
-                    @pass.effect("highlight",{},250)
+    click : -> login()
 
   new ToolButton
     name  : "settings"
@@ -116,3 +138,5 @@ $(document).ready ->
       Api.send msg :
         text : chat.val()
       chat.val ''
+  
+  login()

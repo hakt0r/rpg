@@ -6,6 +6,51 @@ RPGApi = (function() {
 
   RPGApi.prototype.rules = {};
 
+  RPGApi.prototype.parse_section = function(data, name, kind) {
+    var begin, end, l, r, read, _i, _len;
+    if (kind == null) {
+      kind = '=====';
+    }
+    begin = new RegExp(kind + ' ' + name + ' ' + kind);
+    end = new RegExp(kind + '([^=]+)' + kind);
+    r = [];
+    if (!Array.isArray(data)) {
+      data = data.split('\n');
+    }
+    for (_i = 0, _len = data.length; _i < _len; _i++) {
+      l = data[_i];
+      if (l.match(begin)) {
+        read = true;
+        continue;
+      }
+      if (read && l.match(end)) {
+        break;
+      }
+      if (read) {
+        r.push(l);
+      }
+    }
+    return r;
+  };
+
+  RPGApi.prototype.progress = function(state) {
+    var ba, co;
+    ba = null;
+    co = null;
+    if (state === 'done') {
+      $(".barrier").replaceWith('');
+    } else {
+      co = $("body");
+      debugger;
+      if ((ba = $(".barrier")).length === 0) {
+        co.append("<div class=\"barrier\"></div>");
+        ba = co.find("> .barrier").last();
+      }
+      ba.html("<h2>" + state + "</h2>");
+    }
+    return true;
+  };
+
   RPGApi.prototype.dialog = function(opts) {
     var co, ctx, id;
     if (Api.lastItemId == null) {
@@ -21,6 +66,7 @@ RPGApi = (function() {
     ctx.frame.attr("id", id);
     ctx.frame.addClass("wg");
     ctx.destroy = function() {
+      Api.progress('done');
       ctx.frame.replaceWith("");
       return ctx.ba.replaceWith("");
     };
@@ -128,7 +174,7 @@ RPGApi = (function() {
   RPGApi.prototype.login = function(user, pass, callback) {
     return $.ajax({
       type: 'POST',
-      url: config.wiki,
+      url: config.rpc,
       headers: {
         "Content-Type": "application/json"
       },
@@ -158,7 +204,7 @@ RPGApi = (function() {
   RPGApi.prototype.get = function(path, callback) {
     return $.ajax({
       type: 'POST',
-      url: config.wiki,
+      url: config.rpc,
       headers: {
         "Content-Type": "application/json"
       },
@@ -186,7 +232,7 @@ RPGApi = (function() {
   RPGApi.prototype.list = function(path, callback) {
     return $.ajax({
       type: 'POST',
-      url: config.wiki,
+      url: config.rpc,
       headers: {
         "Content-Type": "application/json"
       },

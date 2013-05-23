@@ -1,6 +1,31 @@
 class RPGApi
   rules : {}
 
+  parse_section : (data, name, kind = '=====') ->
+    begin = new RegExp kind+' '+name+' '+kind
+    end   = new RegExp kind+'([^=]+)'+kind
+    r = []
+    data = data.split '\n' unless Array.isArray data
+    for l in data
+      if l.match begin
+        read = true; continue
+      break if read and l.match end
+      r.push l if read
+    return r
+
+  progress : (state) ->
+    ba = null; co = null
+    if state is 'done'
+      $(".barrier").replaceWith ''
+    else
+      co = $("body")
+      debugger
+      if (ba = $(".barrier")).length is 0
+        co.append """<div class="barrier"></div>"""
+        ba = co.find("> .barrier").last()
+      ba.html "<h2>" + state + "</h2>"
+    true
+
   dialog : (opts) ->
     Api.lastItemId = 0 unless Api.lastItemId?
     id = Api.lastItemId++
@@ -13,6 +38,7 @@ class RPGApi
     ctx.frame.attr("id",id)
     ctx.frame.addClass "wg"
     ctx.destroy = ->
+      Api.progress('done')
       ctx.frame.replaceWith ""
       ctx.ba.replaceWith ""
     ctx.frame.find(".close").on "click", -> ctx.destroy()
@@ -68,7 +94,7 @@ class RPGApi
   login: (user,pass,callback) ->
     $.ajax
       type : 'POST'
-      url : config.wiki
+      url : config.rpc
       headers : "Content-Type": "application/json"
       data :
         JSON.stringify
@@ -85,7 +111,7 @@ class RPGApi
   get : (path, callback) ->
     $.ajax
       type : 'POST'
-      url : config.wiki
+      url : config.rpc
       headers : "Content-Type": "application/json"
       data :
         JSON.stringify
@@ -100,7 +126,7 @@ class RPGApi
   list : (path, callback) ->
     $.ajax
       type : 'POST'
-      url : config.wiki
+      url : config.rpc
       headers : "Content-Type": "application/json"
       data :
         JSON.stringify

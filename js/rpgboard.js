@@ -3,7 +3,8 @@ var Die, ToolButton, config;
 
 config = {
   root: "rpg:kampagnen",
-  wiki: "http://wiki.ulzq.de/lib/plugins/jsonrpc/jsonrpc.php",
+  wiki: "http://wiki.ulzq.de/doku.php?id=",
+  rpc: "http://wiki.ulzq.de/lib/plugins/jsonrpc/jsonrpc.php",
   "default": "Space_2013"
 };
 
@@ -77,7 +78,7 @@ ToolButton = (function() {
 })();
 
 $(document).ready(function() {
-  var chat, i, _i, _len, _ref;
+  var chat, i, login, _i, _len, _ref;
   _ref = [4, 6, 8, 10, 12, 20, 100];
   for (_i = 0, _len = _ref.length; _i < _len; _i++) {
     i = _ref[_i];
@@ -89,67 +90,98 @@ $(document).ready(function() {
       return alert("please dont press this button again");
     }
   });
+  login = function() {
+    return Api.list("", function(campaigns) {
+      var c, camps;
+      camps = (function() {
+        var _j, _len1, _results;
+        _results = [];
+        for (_j = 0, _len1 = campaigns.length; _j < _len1; _j++) {
+          c = campaigns[_j];
+          _results.push("<option>" + c + "</option>");
+        }
+        return _results;
+      })();
+      return Api.dialog({
+        src: "<div class=\"dialog\" id=\"" + this.id + "\">\n  <h2>login</h2>\n  <button class=\"close\">X</button>\n  <label>Campaign</label><select>" + camps + "</select>\n  <label>User</label><input  type=\"text\" class=\"name\" />\n  <label>Password</label><input  type=\"password\" class=\"password\" />\n</div>",
+        init: function() {
+          var _this = this;
+          this.name = this.frame.find(".name");
+          this.pass = this.frame.find(".password");
+          this.camp = this.frame.find("select");
+          this.name.focus();
+          this.name.on("keydown", function(e) {
+            if (e.keyCode === 13) {
+              return _this.pass.focus();
+            }
+          });
+          return this.pass.on("keydown", function(e) {
+            var pass, user;
+            if (e.keyCode === 13) {
+              user = _this.name.val();
+              pass = _this.pass.val();
+              return Api.login(user, pass, function(result) {
+                var id;
+                if (result) {
+                  Api.log("login as", user, 2);
+                  Api.name = user;
+                  Api.campaign = c = {};
+                  c.id = id = _this.camp.val();
+                  return Api.get(id + ':def', function(data) {
+                    var char, charlist, r, usr, wikid, _j, _len1;
+                    data = data.split('\n');
+                    c.title = data.shift().match(/======([^=]+)======/)[1].trim();
+                    c.subtitle = data.shift().replace(/\ \\\\$/, '');
+                    c.gm = data.shift().replace(/gm:/, '').trim();
+                    $("h1").html(c.title);
+                    $("#subtitle").html(c.subtitle);
+                    usr = c.gm.split(':').pop().split(']]').shift();
+                    $("#gm").html('brought to you by ' + ("<a href=\"" + config.wiki + "users:" + usr + "\">" + usr + "</a>"));
+                    c.chars = {};
+                    charlist = Api.parse_section(data, 'Chars');
+                    for (_j = 0, _len1 = charlist.length; _j < _len1; _j++) {
+                      char = charlist[_j];
+                      if ((r = char.match(/  \* \[\[.:chars:([^\]]+)\]\]/))) {
+                        wikid = c.id + ':chars:' + r[1];
+                        c.chars[r[1]] = {
+                          wikid: wikid
+                        };
+                        Api.get(wikid, function(chardata) {
+                          var feat, featlist, feats, name, problist, value, _k, _len2;
+                          featlist = Api.parse_section(chardata, 'Feats');
+                          feats = {};
+                          for (_k = 0, _len2 = featlist.length; _k < _len2; _k++) {
+                            feat = featlist[_k];
+                            feat = feat.replace(/^  \* /, '');
+                            name = feat.match('^[^ ]+').toString();
+                            value = feat.match('-?[0-9]+').toString();
+                            feats[name] = value;
+                          }
+                          problist = Api.parse_section(chardata, 'Problems');
+                          return console.log(feats, probs);
+                        });
+                      }
+                    }
+                    _this.destroy();
+                    return Api.progress('done');
+                  });
+                } else {
+                  _this.name.focus();
+                  _this.name.effect("highlight", {}, 250);
+                  return _this.pass.effect("highlight", {}, 250);
+                }
+              });
+            }
+          });
+        }
+      });
+    });
+  };
   new ToolButton({
     name: "login",
     image: "key",
     click: function() {
-      return Api.list("", function(campaigns) {
-        var c, camps;
-        camps = (function() {
-          var _j, _len1, _results;
-          _results = [];
-          for (_j = 0, _len1 = campaigns.length; _j < _len1; _j++) {
-            c = campaigns[_j];
-            _results.push("<option>" + c + "</option>");
-          }
-          return _results;
-        })();
-        return Api.dialog({
-          src: "<div class=\"dialog\" id=\"" + this.id + "\">\n  <h2>login</h2>\n  <button class=\"close\">X</button>\n  <label>Campaign</label><select>" + camps + "</select>\n  <label>User</label><input  type=\"text\" class=\"name\" />\n  <label>Password</label><input  type=\"password\" class=\"password\" />\n</div>",
-          init: function() {
-            var _this = this;
-            this.name = this.frame.find(".name");
-            this.pass = this.frame.find(".password");
-            this.camp = this.frame.find("select");
-            this.name.focus();
-            this.name.on("keydown", function(e) {
-              if (e.keyCode === 13) {
-                return _this.pass.focus();
-              }
-            });
-            return this.pass.on("keydown", function(e) {
-              var pass, user;
-              if (e.keyCode === 13) {
-                user = _this.name.val();
-                pass = _this.pass.val();
-                return Api.login(user, pass, function(result) {
-                  var id;
-                  if (result) {
-                    Api.log("login as", user, 2);
-                    Api.name = user;
-                    Api.campaign = c = {};
-                    c.id = id = _this.camp.val();
-                    return Api.get(id + ':def', function(data) {
-                      data = data.split('\n');
-                      c.title = data.shift().match(/======([^=]+)======/)[1].trim();
-                      c.subtitle = data.shift().replace(/\ \\\\$/, '');
-                      c.gm = data.shift().replace(/gm:/, '').trim();
-                      $("h1").html(c.title);
-                      $("#subtitle").html(c.subtitle);
-                      $("#gm").html('brought to you by ' + c.gm);
-                      return _this.destroy();
-                    });
-                  } else {
-                    _this.name.focus();
-                    _this.name.effect("highlight", {}, 250);
-                    return _this.pass.effect("highlight", {}, 250);
-                  }
-                });
-              }
-            });
-          }
-        });
-      });
+      return login();
     }
   });
   new ToolButton({
@@ -174,7 +206,7 @@ $(document).ready(function() {
     });
   });
   chat = $("#chatinput");
-  return chat.on("keydown", function(e) {
+  chat.on("keydown", function(e) {
     if (e.keyCode === 13) {
       Api.send({
         msg: {
@@ -184,4 +216,5 @@ $(document).ready(function() {
       return chat.val('');
     }
   });
+  return login();
 });

@@ -1,0 +1,2 @@
+#!/bin/sh
+tickr 'coffee -o js -b -c' src/*.coffee

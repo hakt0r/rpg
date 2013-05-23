@@ -86,11 +86,11 @@ ul{list-style-type:none;margin:0;padding:0;}
   background: black; opacity: .8;}
 
 .dialog {
-  padding: 20px;
-  display: block;
-  position: fixed;
-  top: 5%;
-  left: 5%; right: 5%; }
+    clear: both;
+    display: block;
+    margin: 7% 23%;
+    padding: 20px;
+    width: 50%;}
 
 .dialog label {
   width: 33%;
